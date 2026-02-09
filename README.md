@@ -1,107 +1,111 @@
 # ComicGen 🎨
 
-ComicGen is an AI-powered comic generation platform that transforms text stories into visual comic pages. It uses Large Language Models (LLM) for storyboarding and character consistency, and Image Generation models for creating high-quality panels.
+ComicGen 是一个 AI 驱动的漫画生成平台，可以将文本故事转化为视觉化的漫画页面。它利用大语言模型（LLM）进行故事板创作和角色一致性控制，并使用图像生成模型创作高质量的漫画分格。
 
-## Features ✨
+## 功能特性 ✨
 
--   **AI Story Generation**: Input a character and plot to generate a multi-page comic script with detailed scene, shot, and dialogue descriptions.
--   **Character Consistency**: Automatically generates and locks a character design to ensure the protagonist looks the same across all panels.
--   **Multi-Panel Page Generation**: Generates full comic pages containing 4-5 panels each.
--   **Interactive UI**: Modern, split-screen interface built with Vue 3 and Tailwind CSS.
--   **Batch Download**: Download the entire comic as a ZIP file.
+-   **AI 故事生成**：输入角色和情节，即可生成包含详细场景、镜头和对白描述的多页漫画脚本。
+-   **角色一致性**：自动生成并锁定角色设计，确保主角在所有画面中的形象保持一致。
+-   **多格页面生成**：生成包含 4-5 个分格的完整漫画页面。
+-   **交互式 UI**：基于 Vue 3 和 Tailwind CSS 构建的现代化分屏界面。
+-   **批量下载**：支持将整部漫画下载为 ZIP 文件。
 
-## Tech Stack 🛠️
+## 界面预览
+![](./demo.jpeg)
 
--   **Frontend**: Vue 3, Vite, Tailwind CSS, Axios
--   **Backend**: FastAPI, Python 3.10
--   **AI Integration**: OpenAI SDK (compatible with DeepSeek/Gemini APIs)
--   **Containerization**: Docker, Docker Compose
 
-## Prerequisites 📋
+## 技术栈 🛠️
 
--   [Docker](https://www.docker.com/get-started) and [Docker Compose](https://docs.docker.com/compose/install/)
--   **Or** for local non-Docker setup:
+-   **前端**：Vue 3, Vite, Tailwind CSS, Axios
+-   **后端**：FastAPI, Python 3.10
+-   **AI 集成**：OpenAI SDK (兼容 DeepSeek/Gemini API)
+-   **容器化**：Docker, Docker Compose
+
+##先决条件 📋
+
+-   [Docker](https://www.docker.com/get-started) 和 [Docker Compose](https://docs.docker.com/compose/install/)
+-   **或者** 进行本地非 Docker 设置：
     -   Node.js (v18+)
     -   Python (v3.10+)
 
-## Quick Start (Docker) 🐳
+## 快速开始 (Docker) 🐳
 
-1.  **Clone the repository** (if applicable) or navigate to the project root.
+1.  **克隆仓库** (如果适用) 或导航到项目根目录。
 
-2.  **Run with Docker Compose**:
+2.  **使用 Docker Compose 运行**：
     ```bash
     docker-compose up --build
     ```
 
-3.  **Access the application**:
-    -   Frontend: [http://localhost:5173](http://localhost:5173)
-    -   Backend API: [http://localhost:8000/docs](http://localhost:8000/docs)
+3.  **访问应用**：
+    -   前端：[http://localhost:5173](http://localhost:5173)
+    -   后端 API：[http://localhost:8000/docs](http://localhost:8000/docs)
 
-## Local Development Setup 💻
+## 本地开发设置 💻
 
-### Backend
+### 后端
 
-1.  Navigate to the `backend` directory:
+1.  进入 `backend` 目录：
     ```bash
     cd backend
     ```
 
-2.  Install dependencies:
+2.  安装依赖：
     ```bash
     pip install -r requirements.txt
     ```
 
-3.  Run the server:
+3.  运行服务器：
     ```bash
     uvicorn main:app --reload --port 8000
     ```
 
-### Frontend
+### 前端
 
-1.  Navigate to the `frontend` directory:
+1.  进入 `frontend` 目录：
     ```bash
     cd frontend
     ```
 
-2.  Install dependencies:
+2.  安装依赖：
     ```bash
     npm install
     ```
 
-3.  Run the development server:
+3.  运行开发服务器：
     ```bash
     npm run dev
     ```
 
-4.  Access at `http://localhost:5174` (or port shown in terminal).
+4.  访问 `http://localhost:5173` (或终端显示的端口)。
 
-## Environment Variables 🔑
+## 环境变量 🔑
 
-The application currently uses hardcoded API keys for demonstration purposes in `backend/api.py`. For a production environment, you should replace these with environment variables:
+为了演示目的，当前应用在 `backend/api.py` 中使用了硬编码的 API 密钥。在生产环境中，您应该将其替换为环境变量：
 
--   `API_KEY`: Your API key for the LLM and Image Generation service.
--   `BASE_URL_TEXT`: Base URL for the text generation API.
--   `BASE_URL_IMAGE`: URL for the image generation API.
+-   `API_KEY`：您的 LLM 和图像生成服务 API 密钥。
+-   `BASE_URL_TEXT`：文本生成 API 的基础 URL。
+-   `BASE_URL_IMAGE`：图像生成 API 的 URL。
 
-## Project Structure 📂
+## 项目结构 📂
 
 ```
 comic/
-├── backend/                # FastAPI backend
+├── backend/                # FastAPI 后端
 │   ├── Dockerfile
-│   ├── api.py              # Logic for external API calls
-│   ├── main.py             # App entry point
-│   ├── models.py           # Pydantic models
+│   ├── api.py              # 外部 API 调用逻辑
+│   ├── main.py             # 应用入口点
+│   ├── models.py           # Pydantic 模型
 │   └── requirements.txt
-├── frontend/               # Vue 3 frontend
+├── frontend/               # Vue 3 前端
 │   ├── Dockerfile
-│   ├── nginx.conf          # Nginx config for Docker
-│   ├── src/                # Vue source code
+│   ├── nginx.conf          # Docker 的 Nginx 配置
+│   ├── src/                # Vue 源代码
 │   └── ...
-├── docker-compose.yml      # Docker composition
-└── README.md               # Project documentation
+├── docker-compose.yml      # Docker 编排文件
+└── README.md               # 项目文档
 ```
 
-## License 📄
+## 许可证 📄
 
 [MIT](LICENSE)
