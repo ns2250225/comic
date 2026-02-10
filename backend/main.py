@@ -11,11 +11,50 @@ import uvicorn
 import db_models
 from database import engine, get_db
 import auth
+import os
+import logging
+from fastapi.responses import JSONResponse
+import traceback
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Create tables
-db_models.Base.metadata.create_all(bind=engine)
+try:
+    db_models.Base.metadata.create_all(bind=engine)
+    logger.info("Database tables created successfully.")
+except Exception as e:
+    logger.error(f"Error creating database tables: {e}")
+    logger.error(traceback.format_exc())
 
 app = FastAPI()
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Starting up...")
+    logger.info(f"Current working directory: {os.getcwd()}")
+    logger.info(f"Directory contents: {os.listdir('.')}")
+    if os.path.exists("data"):
+        logger.info(f"Data directory contents: {os.listdir('data')}")
+    else:
+        logger.info("Data directory does not exist.")
+    
+    # Check DB connection
+    try:
+        with engine.connect() as connection:
+            logger.info("Database connection successful.")
+    except Exception as e:
+        logger.error(f"Database connection failed: {e}")
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Global exception: {exc}")
+    logger.error(traceback.format_exc())
+    return JSONResponse(
+        status_code=500,
+        content={"detail": str(exc), "traceback": traceback.format_exc()},
+    )
 
 # CORS configuration
 origins = [
