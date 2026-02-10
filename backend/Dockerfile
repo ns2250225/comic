@@ -4,6 +4,10 @@ FROM python:3.10-slim
 # Set the working directory in the container
 WORKDIR /app
 
+# Change to Aliyun Mirror for apt
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources 2>/dev/null || sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list \
+    && sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources 2>/dev/null || sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
+
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
