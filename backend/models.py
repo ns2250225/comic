@@ -30,3 +30,28 @@ class ImageRequest(BaseModel):
     character_design: Optional[str] = None # To ensure consistency
     page_number: int
     story_title: str
+
+# Auth Models
+class UserBase(BaseModel):
+    username: str
+
+class UserCreate(UserBase):
+    password: str
+
+class User(UserBase):
+    id: int
+    points: int
+    is_admin: bool
+
+    class Config:
+        orm_mode = True
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+class UserUpdatePoints(BaseModel):
+    points: int

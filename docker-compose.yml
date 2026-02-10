@@ -8,8 +8,10 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - ./sql_app.db:/app/sql_app.db
     environment:
       - PYTHONUNBUFFERED=1
+      # Use the default SQLite path (./sql_app.db) which maps to the mounted file
     restart: always
 
   frontend:
